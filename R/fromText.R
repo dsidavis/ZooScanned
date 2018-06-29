@@ -8,16 +8,18 @@
 
 
 # Deal with tables, i.e. extract them separately
-# Fixup title.
+# Fixup title - first section.
 # Headers and footers.
 
+
+# Check ./Ockelbo Virus/Shirako-1991 
 
 getDocElements =
     # txt  - a character vector containing the text from all of the pages
     #  actually probably want a list of the pages contents so we can find the top and bottom
     # easily and remove headers and footers.
     # So use a tapply()
-function(files, txt = lapply(files, readLines, warn = FALSE))
+function(files, txt = lapply(files, readText))  # Lines, warn = FALSE))
 {
     # Clean the headers and footers
     txt = removeHeaderFooters(txt)
@@ -25,14 +27,12 @@ function(files, txt = lapply(files, readLines, warn = FALSE))
     txt = discardBlankLines(txt)
     ti = findSectionTitles(txt)
 
-    
     sections = split(txt, cumsum(ti))
     names(sections) = sapply(sections, function(x) mkSectionName(x[1]))
 
     # If a title is split across two lines (eg. Swanepoel-1993) we can patch it up here.
     w = sapply(sections, length) == 1
     if(any(w)) {
-        browser()
         i = which(w)
         tmp = mapply(c, sections[i], sections[i+1], SIMPLIFY = FALSE)
         sections[i+1] = tmp
@@ -42,12 +42,18 @@ function(files, txt = lapply(files, readLines, warn = FALSE))
    
 
     if(length(i <- grep("^abstract", names(sections), ignore.case = TRUE))) {
-
         tmp = fixColumns(sections[[i]])
-
         if(length(tmp) > 1) {
-            sections[[i+1]] = unlist(c(tmp[[2]], sections[[i+1]]))
-            sections[[i]] = tmp[[1]]
+            # Combine it with the next section? or create a new section
+            if(TRUE) {
+                sections[[i+1]] = unlist(c(tmp[[2]], sections[[i+1]]))
+                sections[[i]] = tmp[[1]]
+            } else {
+                names(tmp) = c(names(sections)[i], "")
+                sections = c(sections[1:(i-1)], tmp, sections[(i+1):length(sections)])                
+#                sections = c(sections[1:(i-1)], tmp[[1]], tmp[[2]], sections[(i+1):length(sections)])
+#                names(sections) = c(v[1:i], "", v[(i+1):length(v)])
+            }
         }
     }
     
@@ -58,8 +64,12 @@ function(files, txt = lapply(files, readLines, warn = FALSE))
 findSectionTitles =
 function(x)
 {
-    grepl("^(Abstract([.:]?)|Discussion|Introduction|Materials and Methods|References|Literature Cited|Conclusions?|Acknowledgments|Acknowlegements|Results|Summary|Study (area|design))$", x, ignore.case = TRUE) |
-         grepl("ABSTRACT[ .:]|Key words[ :]", x, ignore.case = TRUE) | grepl("^([0-9.]+ )?[-A-Z,. ]+$", x) & !isSequenceOfNames(x) & !isGeneSeq(x)
+    grepl("^(Abstract([.:]?)|Discussion|Introduction|Materials and Methods|References|(Literature|References) Cited|Conclusions?|Acknowledgments|Acknowlegements|Results|Summary|Study (area|design))$", x, ignore.case = TRUE) |
+        grepl("ABSTRACT[ .:]|Key words[ :]", x, ignore.case = TRUE) |
+        grepl("^([0-9.]+ )?[-A-Z,. ]+$", x) &
+        !isSequenceOfNames(x) & !isGeneSeq(x) &
+        nchar(x) > 3 &
+        !grepl("^TABLE", x)
 }
 
 isGeneSeq =
@@ -97,9 +107,22 @@ removeHeaderFooters =
 function(x)
 {
 #   v = data.frame(values = unlist(x), page = rep(seq(along = x), sapply(x, length)), stringsAsFactors = FALSE)
-#   tmp = split(v, v$values)
-   x
- }
+    #   tmp = split(v, v$values)
+
+    lapply(x, removeHeader)
+}
+
+removeHeader =
+function(x)
+{        
+    i = grepl("^([0-9]+ +)?[A-Z ]+ ET AL\\.( +[0-9]+)?$", x)
+    if(any(i))
+      x =  x[- which(i)[1]]
+
+    x = grep("institut pasteur/|vet\\. pathol\\. [0-9]+:[0-9]+-[0-9]+|short communication|virology [0-9]+|copyright ©|downloaded from http|oxford university press|veterinary microbiology|veterinary record|press\\.com by calif dig lib|transactions of the royal society|journal of|onderstepoort journal of|wildlife disease association|am\\. j\\. trop\\. med\\. hyg\\.", x, invert = TRUE, value = TRUE, ignore.case = TRUE)
+    
+    x
+}
 
 
 fixColumns =
@@ -135,4 +158,15 @@ function(x)
         x
         
 #    length(x) > 5 & sum(nchar(x) > 60) > 4 & sum(nchar(x) < 48) > 4    
+}
+
+
+
+readText =
+function(f)
+{
+    ll = readLines(f, warn = FALSE)
+    ll = XML:::trim(ll)
+    i = which(ll != "")[1]
+    ll[i:length(ll)]
 }
