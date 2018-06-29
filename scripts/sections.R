@@ -6,4 +6,3 @@ txtFiles = split(gsub("\\.tiff$", ".txt", tiff), base)
 source("ZooScanned/R/fromText.R")
 tmp = lapply(txtFiles[sects], getDocElements)
 
-#z = tmp[names(z)]
