@@ -7,7 +7,9 @@ of the knowledge and even the code from that.
 
 ## Files/Data
 
-+ The original PDF files of the scanned articls are [here](http://dsi.ucdavis.edu/Data/Zoonotics/scannedNewPDFs_pdf.tar.gz)
+You need your UCDavis CAS login to access these files. Please don't share them with other people for now.
+
++ The original PDF files of the scanned articles are [here](http://dsi.ucdavis.edu/Data/Zoonotics/scannedNewPDFs_pdf.tar.gz)
 + The tiff files from the original scanned PDF documents are [here](http://dsi.ucdavis.edu/Data/Zoonotics/scannedNewPDFs_tiff.tar.gz)
 + The results from running OCR via [Rtesseract]() on each image are available
   [here](http://dsi.ucdavis.edu/Data/Zoonotics/scannedNewPDFs_rds.tar.gz)
@@ -16,7 +18,7 @@ of the knowledge and even the code from that.
 So you don't need to work directly with the PDFs or the tiffs as we have already done the OCR
 to get the text and the R data.frames.
 
-Working with the R data.frames (the rds files) will be easier with the [Rtesseract]() package.
+Working with the R data.frames (the rds files) will be easier with the [Rtesseract](https://github.com/duncantl/Rtesseract) package.
 
 # Goals
 
@@ -43,7 +45,7 @@ doc = list(title = "...", abstract = "....",
   converted to TIFFs incorrectly.
     + e.g. look for a small number of words on the page and confirm if this is accurate, e.g. an image.
 	+ identify rows that do not correspond to real words but are "specks"
-
+	
 + Look at 5 - 15 (or more) documents and try to identify patterns and strategies to programmatically
   identify 
      + article title, 
@@ -54,6 +56,8 @@ doc = list(title = "...", abstract = "....",
 	 + journal name
 	 + page numbers
 	 + footers and headers generally,
++ Let's discuss the strategies and see how they related to the regular PDF documents we have already
+  processed and discuss how we can reuse that code.	 
 + Build a training set of results we want to get for 5 - 15 documents (or more).
 
 
@@ -65,5 +69,16 @@ doc = list(title = "...", abstract = "....",
 + We run Rtesseract::GetBoxes() on each TIFF image to get the data.frame of top, left, right,
    bottom, text, confidence values for each word tesseract finds.
 + We run the command-line tesseract program to generate the lines of text that are separated into 
+
+
+## Where to Put Code
+
++ Add R functions in the R/ directory.
++ Add files with R commands that operate on one or more files in scripts/.  Hopefully these call
+  functions stored in the R/ directory.
++ Make certain to keep all your code in the R/  or scripts/ rather than just interactively in the R
+  session and then we lose it.  Reproducability of all steps is key.
++ Keep careful notes of what you tried, what worked, what didn't, what PDF documents and pages
+  exhibited interesting characteristics, ...
 
 
