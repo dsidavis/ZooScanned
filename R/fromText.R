@@ -1,21 +1,24 @@
 # Functions to extract the sections from the text output of the OCR command line
 # which handles columns for us.
 
+# TODO
+# 1. Fixup title - first section.
+# 2. Deal with tables, i.e. extract them separately
+# 3. Figures and finding text from figures that is used as section titles.
+# 4. Headers and footers (partially done, but not generally)
+
+
 # The cmdline OCR doesn't handle INTRODUCTION centered in one column and text in the next column. It joins them. See Neitzel-1991.
 # See Swanepoel-1993 also for the INTRODUCTION.
 
 # And the abstract is getting confused in Swanepoel-1993 because of the list of authors being matched as a section title since all capitals.
 
+## FIGURES
 # Ubico-1995 - section titles from Figure 1's image. e.g. CARIBBEAN SEA, HONDURAS
 # Same with Rawlings-1996 from many figures/images
 # Reissen-1195
 
 # ./Crimean Congo Hemorrhagic Fever Virus/Zeller-1997" - one author on line by self under the others. Need to combine these.
-
-
-# Deal with tables, i.e. extract them separately
-# Fixup title - first section.
-# Headers and footers.
 
 
 # Check ./Ockelbo Virus/Shirako-1991 
@@ -25,14 +28,34 @@ getDocElements =
     #  actually probably want a list of the pages contents so we can find the top and bottom
     # easily and remove headers and footers.
     # So use a tapply()
-function(files, txt = lapply(files, readText), dropReferences = TRUE)  # Lines, warn = FALSE))
+function(files, txt = lapply(seq(along = files), function(i) readText(files[i], i)), dropReferences = TRUE)  # Lines, warn = FALSE))
 {
     # Clean the headers and footers
+    pages = txt
     txt = removeHeaderFooters(txt)
     txt = unlist(txt)
     txt = discardBlankLines(txt)
     ti = findSectionTitles(txt)
+    w =  isInFigure(txt, ti, pages)
+    w = w[ order(as.integer(names(w))) ]
 
+    ok = unlist(w)
+    if(any(!ok)) {
+        i = which(ti)
+        if(any(grepl("MATERIALS|RESULTS" , txt[ti][!ok])))
+            stop("dropping important: ",  paste(txt[ti][!ok], collapse = ", "))
+        else {
+            w = simpleWarning("dropping section titles")
+            class(w) = c("DropSectionTitles", class(w))
+            w$sections = txt[ti][!ok]
+            message("Dropping ", paste(w$sections, collapse = ", "))
+            warning(w)
+#            warning("dropping ", paste(txt[ti][!ok], collapse = ", "))
+        }
+        ti[ i[!ok] ] = FALSE
+    }
+#browser()
+    
     sections = split(txt, cumsum(ti))
     names(sections) = sapply(sections, function(x) mkSectionName(x[1]))
 
@@ -179,10 +202,42 @@ function(x)
 
 
 readText =
-function(f)
+function(f, pageNum = NA)
 {
     ll = readLines(f, warn = FALSE)
+    names(ll) = rep(pageNum, length(ll))
     ll = XML:::trim(ll)
     i = which(ll != "")[1]
     ll[i:length(ll)]
+}
+
+
+isInFigure =
+function(txt, ti, pages)
+{
+   byp = split(data.frame(text = txt, isTitle = ti, page = names(ti), stringsAsFactors = FALSE), names(ti))
+   sapply(byp, isInFigure2)
+}
+
+isInFigure2 =
+function(df)    
+{
+    q = quantile( nchar(df$text), .8 )
+
+    df$isFigure = grepl("^ *Figure [0-9]+", df$text, ignore.case = TRUE)
+    if(!any(df$isFigure))
+       return(df$isTitle[df$isTitle])
+
+    if(q < 55)
+        cols = split(df, 1:nrow(df) >= (nrow(df)/2))
+    else
+        cols = list(df)
+
+    unlist( sapply(cols, function(x) { if(any(x$isFigure)) {
+                                           i = which(x$isTitle)
+                                           j = which(x$isFigure)
+                                           structure(i >= min(j), names = x$text[x$isTitle])
+                                       } else
+                                           x$isTitle[x$isTitle]
+                                     }))
 }
