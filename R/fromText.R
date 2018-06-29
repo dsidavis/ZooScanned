@@ -4,8 +4,9 @@
 # TODO
 # 1. Fixup title - first section.
 # 2. Deal with tables, i.e. extract them separately
-# 3. Figures and finding text from figures that is used as section titles.
-# 4. Headers and footers (partially done, but not generally)
+
+# 4. [partial] Headers and footers (partially done, but not generally)
+# 3. [heuristics in place to deal with this]  Figures and finding text from figures that is used as section titles.
 
 
 # The cmdline OCR doesn't handle INTRODUCTION centered in one column and text in the next column. It joins them. See Neitzel-1991.
