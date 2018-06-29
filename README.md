@@ -37,6 +37,7 @@ doc = list(title = "...", abstract = "....",
                            Discussion = "...",
               		   	    ...
      		        	  )
+           )						  
 ```
 
 # Tasks
