@@ -3,7 +3,7 @@ rather than is a regular PDF document.
 This is the same information we are extracting from regular PDF articles using
 [ReadPDF](https://github.com/dsidavis/ReadPDF) and
 [Zoonotics-shared](https://github.com/mespe/Zoonotics-shared).  We want to reuse much
-of the knowledge and even the code from that.
+of the knowledge and even the code from these.
 
 ## Files/Data
 
@@ -20,7 +20,7 @@ to get the text and the R data.frames.
 
 Working with the R data.frames (the rds files) will be easier with the [Rtesseract](https://github.com/duncantl/Rtesseract) package.
 
-# Goals
+## Goals
 
 The initial goal is to be able to extract the 
   + article title
@@ -40,7 +40,7 @@ doc = list(title = "...", abstract = "....",
            )						  
 ```
 
-# Tasks
+## Tasks
 
 + Examine the OCR output and find anomolies so that we can identify pages that may have been
   converted to TIFFs incorrectly.
