@@ -59,7 +59,13 @@ doc = list(title = "...", abstract = "....",
 	 + footers and headers generally,
 + Let's discuss the strategies and see how they related to the regular PDF documents we have already
   processed and discuss how we can reuse that code.	 
+
 + Build a training set of results we want to get for 5 - 15 documents (or more).
+
++ Identify if a page is rotated
++ Identify 'specks' on the page that appear as text but we should discard, typically at the edges 
+  and often appearing with vertical characters such as |, }, {, [, ]
++ Group text into columns if using the top,bottom, left, right format from tesseract (not the text output)
 
 
 ## Workflow
