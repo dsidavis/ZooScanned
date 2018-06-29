@@ -6,6 +6,12 @@
 
 # And the abstract is getting confused in Swanepoel-1993 because of the list of authors being matched as a section title since all capitals.
 
+
+# Deal with tables, i.e. extract them separately
+# Fixup title.
+# Headers and footers.
+
+
 getDocElements =
     # txt  - a character vector containing the text from all of the pages
     #  actually probably want a list of the pages contents so we can find the top and bottom
@@ -19,13 +25,21 @@ function(files, txt = lapply(files, readLines, warn = FALSE))
     txt = discardBlankLines(txt)
     ti = findSectionTitles(txt)
 
-    d = diff(which(ti))
-    if(any(d == 1)) {
-#    browser()    
-    }
     
     sections = split(txt, cumsum(ti))
     names(sections) = sapply(sections, function(x) mkSectionName(x[1]))
+
+    # If a title is split across two lines (eg. Swanepoel-1993) we can patch it up here.
+    w = sapply(sections, length) == 1
+    if(any(w)) {
+        browser()
+        i = which(w)
+        tmp = mapply(c, sections[i], sections[i+1], SIMPLIFY = FALSE)
+        sections[i+1] = tmp
+        names(sections)[i+1] = paste(names(sections)[i], names(sections)[i+1])
+        sections = sections[-i]
+    }
+   
 
     if(length(i <- grep("^abstract", names(sections), ignore.case = TRUE))) {
 
@@ -45,9 +59,14 @@ findSectionTitles =
 function(x)
 {
     grepl("^(Abstract([.:]?)|Discussion|Introduction|Materials and Methods|References|Literature Cited|Conclusions?|Acknowledgments|Acknowlegements|Results|Summary|Study (area|design))$", x, ignore.case = TRUE) |
-         grepl("ABSTRACT[ .:]|Key words[ :]", x, ignore.case = TRUE) | grepl("^([0-9.]+ )?[-A-Z,. ]+$", x) & !isSequenceOfNames(x)
+         grepl("ABSTRACT[ .:]|Key words[ :]", x, ignore.case = TRUE) | grepl("^([0-9.]+ )?[-A-Z,. ]+$", x) & !isSequenceOfNames(x) & !isGeneSeq(x)
 }
 
+isGeneSeq =
+function(x, threshold = .9)
+{
+  nchar(x) > 30 & length(gregexpr("[ACGTUYR]", x)) > nchar(x)*threshold
+}
 
 isSequenceOfNames =
 function(x)
