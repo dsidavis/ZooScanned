@@ -6,6 +6,9 @@
 
 # And the abstract is getting confused in Swanepoel-1993 because of the list of authors being matched as a section title since all capitals.
 
+# Ubico-1995 - section titles from Figure 1's image. e.g. CARIBBEAN SEA, HONDURAS
+# ./Crimean Congo Hemorrhagic Fever Virus/Zeller-1997" - one author on line by self under the others. Need to combine these.
+
 
 # Deal with tables, i.e. extract them separately
 # Fixup title - first section.
@@ -19,7 +22,7 @@ getDocElements =
     #  actually probably want a list of the pages contents so we can find the top and bottom
     # easily and remove headers and footers.
     # So use a tapply()
-function(files, txt = lapply(files, readText))  # Lines, warn = FALSE))
+function(files, txt = lapply(files, readText), dropReferences = TRUE)  # Lines, warn = FALSE))
 {
     # Clean the headers and footers
     txt = removeHeaderFooters(txt)
@@ -54,6 +57,17 @@ function(files, txt = lapply(files, readText))  # Lines, warn = FALSE))
 #                sections = c(sections[1:(i-1)], tmp[[1]], tmp[[2]], sections[(i+1):length(sections)])
 #                names(sections) = c(v[1:i], "", v[(i+1):length(v)])
             }
+        }
+    }
+
+    if(dropReferences) {
+        w = tolower(names(sections)) %in% c("literature cited", "references", "references cited")
+        if(any(w)) {
+            i = which(w)
+            if(i < length(sections))
+                warning("removing sections after references: ", paste(names(sections)[(i+1): length(sections)], collapse = ", "))
+
+            sections = sections[1:(i-1)]
         }
     }
     
@@ -119,7 +133,7 @@ function(x)
     if(any(i))
       x =  x[- which(i)[1]]
 
-    x = grep("institut pasteur/|vet\\. pathol\\. [0-9]+:[0-9]+-[0-9]+|short communication|virology [0-9]+|copyright ©|downloaded from http|oxford university press|veterinary microbiology|veterinary record|press\\.com by calif dig lib|transactions of the royal society|journal of|onderstepoort journal of|wildlife disease association|am\\. j\\. trop\\. med\\. hyg\\.", x, invert = TRUE, value = TRUE, ignore.case = TRUE)
+    x = grep("journal of wildlife diseases|institut pasteur/|vet\\. pathol\\. [0-9]+:[0-9]+-[0-9]+|short communication|virology [0-9]+|copyright ©|downloaded from http|oxford university press|veterinary microbiology|veterinary record|press\\.com by calif dig lib|transactions of the royal society|journal of|onderstepoort journal of|wildlife disease association|am\\. j\\. trop\\. med\\. hyg\\.", x, invert = TRUE, value = TRUE, ignore.case = TRUE)
     
     x
 }
