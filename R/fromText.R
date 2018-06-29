@@ -7,6 +7,9 @@
 # And the abstract is getting confused in Swanepoel-1993 because of the list of authors being matched as a section title since all capitals.
 
 # Ubico-1995 - section titles from Figure 1's image. e.g. CARIBBEAN SEA, HONDURAS
+# Same with Rawlings-1996 from many figures/images
+# Reissen-1195
+
 # ./Crimean Congo Hemorrhagic Fever Virus/Zeller-1997" - one author on line by self under the others. Need to combine these.
 
 
@@ -48,7 +51,7 @@ function(files, txt = lapply(files, readText), dropReferences = TRUE)  # Lines, 
         tmp = fixColumns(sections[[i]])
         if(length(tmp) > 1) {
             # Combine it with the next section? or create a new section
-            if(TRUE) {
+            if(FALSE) {
                 sections[[i+1]] = unlist(c(tmp[[2]], sections[[i+1]]))
                 sections[[i]] = tmp[[1]]
             } else {
@@ -129,7 +132,7 @@ function(x)
 removeHeader =
 function(x)
 {        
-    i = grepl("^([0-9]+ +)?[A-Z ]+ ET AL\\.( +[0-9]+)?$", x)
+    i = grepl("^([0-9]+ +)?[A-Z ]+ (ET AL\\.|AND OTHERS)( +[0-9]+)?$", x)
     if(any(i))
       x =  x[- which(i)[1]]
 
@@ -147,8 +150,7 @@ fixColumns =
 function(sect)
 {
     #    tmp = sapply(sects, spansCols)
-    cols = spansCols(sect)
-    cols
+    spansCols(sect)
     # function(x) length(x) > 5 & sum(nchar(x) > 60) > 4 & sum(nchar(x) < 48) > 4) 
 #  sapply(sects, splitC
 }
@@ -169,7 +171,7 @@ function(x)
         i= seq_len(r$lengths[1])
         list(unlist(lapply(pars[ i ], c, "")), unlist(lapply(pars[-i], c, "")))
     } else
-        x
+        list(x)
         
 #    length(x) > 5 & sum(nchar(x) > 60) > 4 & sum(nchar(x) < 48) > 4    
 }
