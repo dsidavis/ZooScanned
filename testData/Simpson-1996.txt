@@ -1,0 +1,58 @@
+66
+TRANSACTIONS OF THE ROYAL SOCIETY OF TROPICAL MEDICINE AND HYGIENE, VoL. 70. No. 1. 1976.
+Arbovirus infections in Sarawak: the role of the domestic pig
+D. I. H. Stimpson, C. E. GG. SMitH AND T. F. DE C. MARSHALL
+London School of Hygiene and Tropical Medicine, Keppel Street, London WCIE 7HT
+G. S. PLATT, H. J. WAY, E. T. W. Bowen, W. F. BrigHT, J. DAY, D. A. McMaHON.AND M. N. HILL
+Microbiological Research Establishment, Porton, Salisbury, Wilts.
+P. J. E. BENDELL AND O. H. U. HEATHCOTE
+Medical Research Council External Staff, Sarawak
+Summary
+The possible role of pigs as arbovirus maintenance hosts and their importance as amplifier hosts was studied.
+Blood samples from 464 pigs of all ages collected in 1962 and 1964 were tested against 10 arboviruses. Antibodies
+to Japanese encephalitis and Getah viruses were particularly prevalent and their calculated monthly infection
+rates were 19-59; and 13-39 respectively. In 1969, 447 pigs were bled monthly throughout the year and the
+infection rates for Japanese encephalitis virus were calculated in pigs during the first year of life. Infection rates
+were not uniform throughout the year; the rate increased as the pig grew older and there was a marked seasonal
+increase in the infection rate in the period from November to January. This coincided with the seasonal major
+population peak of Culex tritaeniorhynchus following intense breeding of this mosquito prior to rice planting.
+It is suggested that, in Sarawak, the pig acts as a maintenance host of Japanese encephalitis in a cycle involving
+C. gelidus mosquitoes and also acts as an important amplifier host towards the end of the year in a cycle
+involving C. tritaeniorhynchus. It is further suggested that Getah virus is maintained in a similar cycle between
+C. tritaeniorhynchus and pigs.
+Introduction SiMpsoN et al, 1970a, 1974, 1975; BoweN et al, 1970;
+Investigations concerned with the epidemiology of PLATT et al, 1975).
+arbovirus infections in Sarawak were cdrried out during In Japan, BuescHER and SCHERER (1959) showed that
+three short-term visits between December 1962 and the principal vertebrate maintenance hosts of Japanese
+December 1966 and by a more detailed 18-month study encephalitis virus were birds, particularly herons and
+between October 1968 and February 1970. egrets. The domestic pig was shown to act as an amplifier
+The studies involved defining the common species of host which, in association with C. tritaeniorhynchus,
+mosquitoes (particularly those biting man), isolating boosted the overall proportion of infected mosquitoes,
+viruses from them and measuring antibody prevalences especially close to human habitations, during the summer
+in human and animal populations. Japanese encephalitis months, thus increasing the risk to man. Pigs have been
+virus was found to be the principal cause of human shown to be hosts of the virus in Singapore (HALE et al,
+encephalitis and antibodies to Japanese encephalitis and 1957) and Taiwan (HurLBuUT, 1964) and GouLD et al
+dengue viruses were shown to be prevalent in all areas of (1962) also showed that C. gelidus is an important arthro-
+Sarawak (SMITH et al, 1974). The general trend of arbo- pod host. The amplifier role of pigs during the summer
+virus infections was of highest infection rates in coastal, months in Japan is now well recognized, and TAKAHASHI
+estuarine and inland forest areas, while urban areas had et al (1966) were able to predict human epidemics by
+the lowest rates. One hundred and forty-three arbovirus monitoring for an increase in the prevalence of Japanese
+strains were isolated from mosquitoes—69 strains of encephalitis virus antibodies among slaughtered pigs in
+Japanese encephalitis, 41 of Tembusu, 15 of Sindbis, Nagasaki Prefecture.
+14 of Getah, 3 of Kunjin and a single Bunyamwera group Pigs are kept extensively among the non-Muslim
+virus. Most of these isolates were obtained from Culex communities throughout Sarawak, both in towns and in
+tritaeniorhynchus and C. gelidus (SMITH et al, 1969; the rural areas. Chinese farmers often keep large numbers
+_—————— of pigs in well-run piggeries, and it is rare to find a Chinese
+The visits to Sarawak were financed and supported smallholding without its quota of pigs. In Dyak villages
+jointly by the Ministry of Overseas Development pigs are allowed to roam and scavenge freely below the
+(formerly Department of Technical Co-operation) and long houses. The present study was carried out in an
+the Malaysian Government, and we are indebted to both attempt to understand the possible role of pigs in
+for facilitating our work in many ways. We are very Sarawak as arbovirus maintenance hosts and their
+grateful to successive directors and staff of the Institute importance as amplifier hosts.
+for Medical Research, Kuala Lumpur. We are indebted
+to many members of the Sarawak Medical Department, Materials and methods
+especially Dr. Chong Chun Hian, previous directors of Areas studied
+Medical Services and their headquarters’ staffs. In In 1962 a small number of pigs were bled at a Chinese
+addition, we would particularly like to thank Dr. P. S. piggery in Kuching and several blood samples were
+Dawson, Dr. H. E. Webb and Dr. R. W. Pomeroy for collected at Kuching abattoir. Samples were collected in
+their valuable assistance. 1964 from Chinese piggeries in Kuching and Serian

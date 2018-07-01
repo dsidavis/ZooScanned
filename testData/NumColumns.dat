@@ -1,0 +1,68 @@
+# 1 column - correct
+1,./Barmah Forest Virus/Humphery-Smith-1991_000.rds
+1,./Barmah Forest Virus/Vale-1991_000.rds
+1,./Cache Valley Virus/Chung-1990_000.rds
+1,./Cache Valley Virus/McConnell-1987_000.rds
+1,./Dobrava Virus/Dzagurova-1995_000.rds
+1,./Getah Virus/Kumanomido-1988_000.rds
+1,./Getah Virus/Shibata-1991_000.rds
+1,./Issyk-Kul/Lvov-1973_000.rds
+1,./Lagos Bat Virus/Shope-1982_000.rds
+1,./Ockelbo Virus/Lundstrom-1991_000.rds
+1,./Tahyna Virus/Bardos-1974_000.rds
+1,./Western equine encephalitis/Burton-1961_000.rds
+1,./Western equine encephalitis/Hayles-1972_000.rds
+
+
+
+# 2
+2,../Western equine encephalitis/Binninger-1980_000.rds,BioOne
+2,../Jamestown Canyon Virus/Boromisa-1987_000.rds,BioOne
+2,../Jamestown Canyon Virus/Grimstad-1987_000.rds,BioOne
+2,../Western equine encephalitis/McLean-1979_000.rds,BioOne
+2,../Western equine encephalitis/Merrell-1978_000.rds,BioOne
+2,../Western equine encephalitis/Zarnke-1981_000.rds,BioOne
+
+2,../Lagos Bat Virus/Mebatsion-1992_000.rds,CoverPage
+
+# Wrong as 1 should be 2
+2,../Western equine encephalitis/Day-1996_000.rds
+2,../Jamestown Canyon Virus/McLean-1996_000.rds
+2,../Getah Virus/Yago-1987_000.rds
+2,../Getah Virus/Simpson-1976_000.rds
+2,../Getah Virus/Sentsui-1985_000.rds
+2,../Dobrava Virus/Avsiczupanc-1992_000.rds
+2,../Crimean Congo Hemorrhagic Fever Virus/Mariner-1995_000.rds
+2,../Western equine encephalitis/Hayles-1972_000.rds
+2,../Western equine encephalitis/Hollister-1953_000.rds
+2,../Western equine encephalitis/McLean-1989_000.rds
+2,../Lagos Bat Virus/Ogunkoya-1990_000.rds
+2,../Lagos Bat Virus/Swanepoel-1993_000.rds
+
+
+# Fixed
+2,../Tula Virus/Vapalahti-1996_000.rds
+2,../Jamestown Canyon Virus/Murphy-1989_000.rds
+
+# 3
+../Western equine encephalitis/Artsob-1986_000.rds
+
+2,../Black Creek Canal Virus/Ravkov-1995_000.rds
+2,../Cache Valley Virus/Calisher-1986_000.rds
+2,../Crimean Congo Hemorrhagic Fever Virus/Swanepoel-1985_000.rds
+2,../Crimean Congo Hemorrhagic Fever Virus/Swanepoel-1987_000.rds
+2,../Crimean Congo Hemorrhagic Fever Virus/Zeller-1994_000.rds
+2,../Dobrava Virus/Antoniadis-1996_000.rds
+2,../Getah Virus/Imagawa-1981_000.rds
+2,../Getah Virus/Mitchell-1993_000.rds
+2,../Lagos Bat Virus/Mebatsion-1993_000.rds
+2,../Lagos Bat Virus/Oelofsen-1993_000.rds
+2,../Lagos Bat Virus/Shope-1970_000.rds
+2,../Ockelbo Virus/Francy-1989_000.rds
+2,../Ockelbo Virus/Lord-1996_000.rds
+2,../Ockelbo Virus/Shirako-1991_000.rds
+2,../Sandfly Fever Sicilian Virus/Saidi-1977_000.rds
+2,../Tahyna Virus/Mitchell-1993_000.rds
+2,../Toscana Virus/Verani-1988_000.rds
+2,../Tula Virus/Plyusnin-1994_000.rds
+2,../Western equine encephalitis/Iversson-1993_000.rds
