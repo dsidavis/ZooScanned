@@ -117,6 +117,7 @@ g[,2][ g[,2] >= 2.5*median((a$right - a$left)/nchar(a$text)) ]
 Split the Artsob text into columns
 ```
 ll = getLines(art)
+tmp = linesByCol(ll)
 tmp = sapply(ll, function(x) split(x$text, cumsum(c(FALSE,  isColGap(x, charWidth(art)*2.5)))))
 ```
 
