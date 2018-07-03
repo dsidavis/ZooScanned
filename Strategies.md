@@ -100,8 +100,29 @@ that should help us identify a gap of about 2.5 to 3 times the typical
 spacing which identifies a column.
 
 The function getLines() seems to do well on assembling the lines.
+It naturally  has problems when lines on one column are slightly out of vertical
+alignment with those in an adjacent column, i.e., the lines are staggered.
 
 
+
+```
+a = readRDS[["./Getah Virus/Sentsui-1985_000.rds"]]
+ll = getLines(a)
+g = findHGapInLines(ll)
+rownames(g) = sapply(ll, function(x) paste(x$text, collapse = " "))
+g[,2][ g[,2] >= 2.5*median((a$right - a$left)/nchar(a$text)) ]
+```
+
+
+Split the Artsob text into columns
+```
+ll = getLines(art)
+tmp = sapply(ll, function(x) split(x$text, cumsum(c(FALSE,  isColGap(x, charWidth(art)*2.5)))))
+```
+
+* In Artsob, problem with getLines() for one line.  
+    + encephalitis, Powassan, snowshoe    is being appended to MATERIALS AND METHODS line
+	+ also picks up erroneous i] in the RESUME line.
 
 ### Columns and Section Titles
 If we can identify section titles, we can see if they are within a column.
