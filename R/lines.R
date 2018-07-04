@@ -68,20 +68,41 @@ function(x)
 
 
 getNumColsByLine =
+    #
+    # given a data frame from OCR, determine the number of colums on each line.
+    #
+    #
 function(x, ll = as(x, "OCRLines"), threshold = 2.5*charWidth(x))
 {
     tmp = sapply(ll, function(x) sum(isColGap(x, threshold)))
 }
 
 isColGap =
-function(x, threshold)
-   (x$left[-1] - x$right[-nrow(x)]) > threshold    
+    #
+    # Given a data frame of left, right, figure out the the gap between adject words
+    #  figure out which words are sufficiently far apart to constitute a separate column
+    #
+function(x, threshold, sameLength = FALSE, order = TRUE)
+{
+    if(order)
+       x = x[order(x$left),]
+    
+    ans = (x$left[-1] - x$right[-nrow(x)]) > threshold
+    if(sameLength)
+        ans = c(FALSE, ans)
+
+    ans
+}    
 
 
 linesByCol =
+    #
+    # organize the words already arranged by line into separate columns
+    # This just separates the words, but does not put them into the correct column
+    # as determined by the over al
 function(ll, threshold = charWidth(ll)*2.5)
 {
-    sapply(ll, function(x) split(x$text, cumsum(c(FALSE,  isColGap(x, threshold)))))
+    sapply(ll, function(x) split(x$text, cumsum(isColGap(x, threshold, TRUE))))
 }
 
 
@@ -224,3 +245,26 @@ function(x)
 setAs("OCRResults", "OCRLines", function(from) getLines(from))
 
 
+
+getMargins =
+function(x)    
+{
+    structure(c(left = min(x$left), right = max(x$right), top = max(x$bottom), bottom = min(x$bottom)),
+              class = "Margins")
+}
+
+plot.Margins =
+function(x, h = par$usr()[4])
+{
+    abline(v = x[1:2], col = "red")
+    abline(h = x[3:4], col = "red")    
+}
+
+
+isSmudge =
+    # See GetSmudges() also.
+function(x, confThreshold = 30.0)
+{
+  nchar(x$text) == 1 & x$conf <= confThreshold
+}
+        
