@@ -113,13 +113,99 @@ rownames(g) = sapply(ll, function(x) paste(x$text, collapse = " "))
 g[,2][ g[,2] >= 2.5*median((a$right - a$left)/nchar(a$text)) ]
 ```
 
+For Sentsui-1985, we have one line that appears to have 6 columns with `2.5*charWidth()`.
+This is because the words are spaced out in the second column for this line to have
+the line be appropriately justified.
+These are the words in "the virus strains named Sakai/83 and".
+
+
+
 
 Split the Artsob text into columns
 ```
-ll = getLines(art)
+ll = getLines(art[!isSmudge(art),])
 tmp = linesByCol(ll)
-tmp = sapply(ll, function(x) split(x$text, cumsum(c(FALSE,  isColGap(x, charWidth(art)*2.5)))))
 ```
+
+Let's look at how many columns we got on each line:
+```
+table(sapply(tmp, length))
+ 1  2  3 
+ 9  7 37 
+```
+More importantly, we want to know where the lines with less than 2 columns occur.
+For this we look at the raw values:
+```
+unname(sapply(tmp, length))
+```
+```
+[1] 1 1 3 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 3 2 1 2 1 3 1 2 3 2 3 3 3 3 3 3 3 3 3 1 1 1 1 2
+```
+The first two 1's  correspond to the title and author list.
+The first 3 occurs in the ABSTRACT, "mouffettes.." and "JC, have..." line.
+The following 2 column line corresponds to the next line under the ABSTRACT.
+Since there is a vertical gap under ABSTRACT, there is no content in this first column.
+The two columns on this line correspond to the 2nd and 3rd columns.
+
+Line 29 corresponds to the two text segments
+```
+"virus and further delineates the scope" 
+"knowledge of the distribution of arbo-" 
+```
+This corresponds to the penultimate line of the paragraph above the "Key words" in the first column.
+There is no text in the second column (under Mots cles). So these two segments are from the 1st
+and 3rd columns.
+
+Lines 31-34 have 2, 1, 2, 1 entries, respectively.
+These occur above and below the lines identified by "Key words" text in column 1.
+We see there are several empty column cells there.
+```
+[[1]]
+                                   0                                    1 
+                          "Ontario." "St-Louis, virus Powassan, virus du" 
+
+[[2]]
+                 0 
+"lievre, Ontario." 
+
+[[3]]
+                                  0                                   1 
+"Key words: Arboviruses, St. Louis"             "MATERIALS AND METHODS" 
+
+[[4]]
+                                 0 
+"encephalitis, Powassan, snowshoe" 
+```
+
+In the third column, the text "Sera were collected from 725" 
+is on a line by itself.
+
+On the next line,  the two segments 
+```
+"Six arboviruses of human disease-" 
+"animals in 22 Ontario townships (Fig" 
+```
+occur in the second and third columns and there is nothing in the first
+column due to the vertical space above RESUME.
+
+Similarly, below RESUME, there is vertical space in the first column
+and
+```
+"Ontario. These include two alphavir-" 
+"coyote (Canis latrans), 277 fox" 
+```
+occur in the second and third columns.
+
+
+
+
+
+
+The final 5 entries correspond to the lines under the horizontal line near the bottom of the page.
+These are the footnotes and footer.
+There should be 6 lines, but the "Watt)." on the line by itself was erroneously grouped with the
+line above it in getLines(). This is because of the smaller font in the text.
+
 
 * In Artsob, problem with getLines() for one line.  
     + encephalitis, Powassan, snowshoe    is being appended to MATERIALS AND METHODS line

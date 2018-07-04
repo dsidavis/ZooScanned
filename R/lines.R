@@ -100,9 +100,16 @@ linesByCol =
     # organize the words already arranged by line into separate columns
     # This just separates the words, but does not put them into the correct column
     # as determined by the over al
-function(ll, threshold = charWidth(ll)*2.5)
+    #
+    #XXX For Sentsui-1985, we have one line that appears to have 6 columns with 2.5*charWidth()
+    #
+function(ll, threshold = charWidth(ll)*factor, factor = 2.5, dropEmpty = TRUE, asText = TRUE)
 {
-    sapply(ll, function(x) split(x$text, cumsum(isColGap(x, threshold, TRUE))))
+    ans = lapply(ll, function(x) split(if(asText) x$text else x, cumsum(isColGap(x, threshold, TRUE))))
+    if(dropEmpty)
+        ans = ans[sapply(ans, function(x) (if(asText) length(unlist(x)) else length(x))) > 0]
+    
+    unname(ans)
 }
 
 
@@ -219,6 +226,9 @@ getLines =
     #  bw = 19 seems to work for Artsob-1986. The original 20 was just made up.
     #  bw controls the smoothing of the density. The smaller the bandwidth, the more "wiggle" there is and we can pick up troughs.
     #
+    #XXX Groups one line ("Watt).") in the footnotes of Artsob-1986 with the preceding line.
+    #
+    #
 function(df, d = density((df$top+df$bottom)/2, bw), bw = 19, asText = FALSE)
 {
 
@@ -268,3 +278,75 @@ function(x, confThreshold = 30.0)
   nchar(x$text) == 1 & x$conf <= confThreshold
 }
         
+
+
+
+mkColNum =
+    #
+    # Given the results of linesByCol( asText = FALSE) we put the column numbers on the elements of each line.
+    # For  a line that has fewer than the maximum number of columns, we have to determine which columns
+    # its elements correspond. 
+    # We look at the rows that have content for the full (maximum) number of columns.
+    # From these, we determine the locations of the left and right of each column.
+    # With these, we then can assign
+    #
+    #
+    # This returns either
+    # 1) a matrix with as many rows as lines in x and as many columns as were found in the page
+    #     and each entry is either the column number or a NA indicating no text in that column for that line.
+    # 2) the updated value of x with the names of each element updated to identify the column number.
+    #
+    # This could be rewritten in a better way - just testing the approach does work.
+    #
+function(x, asMatrix = TRUE)
+{
+    nc = sapply(x, length)
+    ncols = calcNumCols(nc)
+
+    w = (nc == ncols)
+    ex = t(sapply(x[w], getColExtremes))
+    i = seq(1, len = ncol(ex)/2, by = 2)
+    left = apply(ex[, i], 2, min)
+    right = apply(ex[, i + 1], 2, max)    
+
+    ans = matrix(seq(1, ncols), length(x), ncols, byrow = TRUE)
+    tmp = t( sapply(x[!w], calcColNum, left, right) )
+
+    ans[!w,] = tmp
+    if(asMatrix)
+        ans
+    else {
+        browser()
+         # put the column number on each element of the original x
+        lapply(seq(along = x), function(i) { names(x[[i]]) = ans[i,][!is.na(ans[i,])]; x[[i]] })
+    }
+}
+
+# Want to also get which columns a group of words spans.
+
+calcColNum =
+function(line, left, right)
+{
+    e = getColExtremes(line)
+    k = sapply(e[1,], function(v) max(cumsum( (v - left) > 0)))
+#browser()
+    ans = seq(along = left)
+    ans[ !(ans %in% k) ] = NA
+    ans
+}
+
+
+getColExtremes =
+function(line)
+{
+    sapply(line, function(df) c(left = min(df$left), right = max(df$right)))
+}
+
+
+calcNumCols =
+function(nc)
+{
+    tt = table(nc)
+    tt = tt[tt > 1]
+    as.integer(names(tt)[which.max(tt)])
+}
