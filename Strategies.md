@@ -198,9 +198,6 @@ occur in the second and third columns.
 
 
 
-
-
-
 The final 5 entries correspond to the lines under the horizontal line near the bottom of the page.
 These are the footnotes and footer.
 There should be 6 lines, but the "Watt)." on the line by itself was erroneously grouped with the
@@ -210,6 +207,34 @@ line above it in getLines(). This is because of the smaller font in the text.
 * In Artsob, problem with getLines() for one line.  
     + encephalitis, Powassan, snowshoe    is being appended to MATERIALS AND METHODS line
 	+ also picks up erroneous i] in the RESUME line.
+
+
+
+#### Connecting text to columns
+
+When a line returned from lineByCol() has fewer elements than  there are columns,
+we have to identify in which  columns the elements are located.
+For example, in the first page of Artsob above, the 5 line has only two entries.
+These are in columns 2 and 3.
+However,  line 29 has elements in the 1st and 3rd column.
+We can compute the column number for each segement of words with
+```
+ll = getLines(art[!isSmudge(art),])
+tmp = linesByCol(ll, asText = FALSE)
+o = mkColNum(tmp)
+```
+Note the `asText = FALSE` argument to `linseByCol`.
+
+By default, `mkColNum()` currently returns a matrix with as many columns as there are columns of
+text on the page, and as many rows as there are lines passed to it, i.e., obtained
+from `linesByCol()`.
+Each entry in the matrix is either the column number or NA, indicating that the corresponding
+line-column cell is empty.
+
+We can also have `mkColNum()` return the original input, but with the names of the
+elements for each line identifying the column number.
+
+
 
 ### Columns and Section Titles
 If we can identify section titles, we can see if they are within a column.
