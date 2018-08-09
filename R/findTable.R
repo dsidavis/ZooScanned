@@ -18,7 +18,7 @@ function(img, pix = pixConvertTo8(pixRead(img)),
          rotated = pixRotateAMGray(pix, angle[1]*pi/180, 255))
 {
     i = findTableWord(bbox)
-browser()    
+#browser()    
     hlines = getLines(rotated, 51, 3)
     #XXX For now, assume only one value in i !! Need to process each separately, but first up to the next, etc.
     w = sapply(hlines, function(x) x[1, "y0"] > bbox[i, "bottom"])
