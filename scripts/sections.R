@@ -8,5 +8,7 @@ sects = sapply(txt, function(x) any(grepl("^((([0-9.]+ )? [A-Z ]+)|Discussion|In
 
 
 source("ZooScanned/R/fromText.R")
-tmp = lapply(txtFiles[sects], getDocElements)
+#tmp = lapply(txtFiles[sects], getDocElements)
+tmp = lapply(txtFiles, function(f) try(getDocElements(f)))
 
+# Now look at the results and explore the number of sections found in each, ....

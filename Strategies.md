@@ -219,11 +219,11 @@ These are in columns 2 and 3.
 However,  line 29 has elements in the 1st and 3rd column.
 We can compute the column number for each segement of words with
 ```
-ll = getLines(art[!isSmudge(art),])
+ll = getLines(art[!isSmudge(art),], asText = FALSE)
 tmp = linesByCol(ll, asText = FALSE)
 o = mkColNum(tmp)
 ```
-Note the `asText = FALSE` argument to `linseByCol`.
+Note the `asText = FALSE` argument to both `getLines()` and `linesByCol()`.
 
 By default, `mkColNum()` currently returns a matrix with as many columns as there are columns of
 text on the page, and as many rows as there are lines passed to it, i.e., obtained
@@ -235,6 +235,14 @@ We can also have `mkColNum()` return the original input, but with the names of t
 elements for each line identifying the column number.
 
 
+
+
+```
+a = p1[["./Lagos Bat Virus/Oelofsen-1993_000.rds"]]
+ll = getLines(a, asText = FALSE)
+tmp = linesByCol(ll, asText = FALSE)
+o = mkColNum(tmp)
+```
 
 ### Columns and Section Titles
 If we can identify section titles, we can see if they are within a column.

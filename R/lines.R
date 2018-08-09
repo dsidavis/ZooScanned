@@ -227,12 +227,14 @@ getLines =
     #  bw controls the smoothing of the density. The smaller the bandwidth, the more "wiggle" there is and we can pick up troughs.
     #
     #XXX Groups one line ("Watt).") in the footnotes of Artsob-1986 with the preceding line.
+    #  If we use bw = 12, it works
     #
-    #
-function(df, d = density((df$top+df$bottom)/2, bw), bw = 19, asText = FALSE)
+function(df, d = density((df$top+df$bottom)/2, bw), bw = 19, asText = FALSE, dropEmpty = TRUE)
 {
 
     ll2 = split(df, cut((df$top + df$bottom)/2, c(0, d$x[findPeaks(d$y, FALSE)], max(df$top))))
+    if(dropEmpty)
+        ll2 = ll2[ sapply(ll2, nrow) > 0 ]
     if(asText)
         sapply(ll2, function(x) paste(x$text, collapse = " "))
     else
